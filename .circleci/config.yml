@@ -6,7 +6,7 @@ jobs:
     - image: circleci/node:7
     steps: 
       - checkout
-      - run: npm ci
+      - run: npm install
       - run: npm test
   # test: 
   #   working_directory: ~/tmp
