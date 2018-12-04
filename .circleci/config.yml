@@ -24,9 +24,8 @@ jobs:
       -  *persist_to_workspace
 
   test: 
-    working_directory: ~/tmp
-    docker:
-    - image: circleci/node:7
+    <<: *defaults
+    parallelism: 2
     steps:
       - *attach_workspace
       - run: npm test
