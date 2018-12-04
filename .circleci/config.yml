@@ -3,17 +3,24 @@ jobs:
   build:
     working_directory: ~/tmp
     docker:
-    - image: circleci/node:7
+    - image: circleci/node:8.11.2
     steps: 
       - checkout
       - run: npm install
+
+      - persist_to_workspace:
+
+          root: workspace
+          paths:
+            - echo-output
 
   test: 
     working_directory: ~/tmp
     docker:
     - image: circleci/node:7
     steps:
-      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run: npm test
 
 workflows:
@@ -23,5 +30,6 @@ workflows:
       jobs:
       - build
       - test:
+        # must persist build
           requires:
             - build
