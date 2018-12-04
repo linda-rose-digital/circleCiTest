@@ -6,7 +6,7 @@ jobs:
     - image: circleci/node:8.11.2
     steps: 
       - checkout
-      - run: npm install
+      - run: npm ci
 
       # - persist_to_workspace:
 
@@ -22,7 +22,7 @@ jobs:
       # - attach_workspace:
       #     at: /tmp/workspace
       - checkout
-      - run: npm install
+      - run: npm ci
       - run: npm test
 
 workflows:
