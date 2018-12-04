@@ -8,19 +8,21 @@ jobs:
       - checkout
       - run: npm install
 
-      - persist_to_workspace:
+      # - persist_to_workspace:
 
-          root: workspace
-          paths:
-            - echo-output
+      #     root: workspace
+      #     paths:
+      #       - echo-output
 
   test: 
     working_directory: ~/tmp
     docker:
     - image: circleci/node:7
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
+      # - attach_workspace:
+      #     at: /tmp/workspace
+      - checkout
+      - run: npm install
       - run: npm test
 
 workflows:
