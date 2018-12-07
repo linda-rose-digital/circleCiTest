@@ -1,10 +1,42 @@
+defaults: &defaults
+  working_directory: &workspace_root ~/tmp
+  docker:
+    - image: circleci/node:8.11.2
+
+references:
+  persist_to_workspace: &persist_to_workspace
+      persist_to_workspace:
+        root: *workspace_root
+        paths: 
+        - ./
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 version: 2 
 jobs: 
   build:
-    working_directory: ~/tmp
-    docker:
-    - image: circleci/node:7
+    <<: *defaults
     steps: 
       - checkout
       - run: npm install
+      -  *persist_to_workspace
+
+  test: 
+    <<: *defaults
+    parallelism: 2
+    steps:
+      - *attach_workspace
       - run: npm test
+
+workflows:
+    version: 2
+
+    build-test-deploy:
+      jobs:
+      - build
+      - test:
+        # must persist build
+          requires:
+            - build
